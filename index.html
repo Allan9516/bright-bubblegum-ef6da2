@@ -350,7 +350,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 10</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 11</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -1467,7 +1467,23 @@ window.LB={submit,push,refresh:paintHome,share:shareMine,home:()=>{paintHome();h
 
 <script>
 /* installerbar som app: gemmer spillet lokalt, så det virker uden net */
-/* enkeltfil-version */
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").then(r=>{
+      r.addEventListener("updatefound",()=>{
+        const w=r.installing;
+        if(!w) return;
+        w.addEventListener("statechange",()=>{
+          if(w.state==="installed" && navigator.serviceWorker.controller) w.postMessage("skip");
+        });
+      });
+    }).catch(()=>{});
+    let reloaded=false;
+    navigator.serviceWorker.addEventListener("controllerchange",()=>{
+      if(reloaded) return; reloaded=true; location.reload();
+    });
+  });
+}
 </script>
 </body>
 </html>
