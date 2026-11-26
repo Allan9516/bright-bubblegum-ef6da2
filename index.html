@@ -525,7 +525,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 27</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 28</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -1223,10 +1223,12 @@ function startLevel(n){
     G.startIQ=r.startIQ!==undefined?r.startIQ:IQ;
   }
   RESTORE=null;
-  if(!duel&&window.JULBONUS&&window.JULBONUS.brug){
-    const jb=window.JULBONUS.brug();
-    G.hints+=jb.hint;G.undos+=jb.undo;G.shuffles+=jb.shuf;
-  }
+  try{
+    if(!duel&&window.JULBONUS&&typeof window.JULBONUS.brug==="function"){
+      const jb=window.JULBONUS.brug()||{};
+      G.hints+=(jb.hint|0);G.undos+=(jb.undo|0);G.shuffles+=(jb.shuf|0);
+    }
+  }catch(e){}
   render();save();
 }
 
@@ -1789,6 +1791,7 @@ if("serviceWorker" in navigator && location.protocol.startsWith("http")){
 <script>
 /* ================= JUL: tema, sne, lyskaede og kalender ================= */
 (function(){
+ try{
   const D=document, root=D.documentElement;
   const get=(k,f)=>{try{const v=localStorage.getItem("iq:"+k);return v?JSON.parse(v):f;}catch(e){return f;}};
   const set=(k,v)=>{try{localStorage.setItem("iq:"+k,JSON.stringify(v));}catch(e){}};
@@ -2002,6 +2005,11 @@ if("serviceWorker" in navigator && location.protocol.startsWith("http")){
   prik();
   setInterval(prik,60000);
   D.addEventListener("visibilitychange",()=>{if(!D.hidden)prik();});
+ }catch(e){
+  /* julen maa aldrig spaerre for spillet */
+  try{document.documentElement.classList.remove("jul");}catch(_){}
+  try{const k=document.getElementById("kalBtn");if(k)k.style.display="none";}catch(_){}
+ }
 })();
 </script>
 </body>
