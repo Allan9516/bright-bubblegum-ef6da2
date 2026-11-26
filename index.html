@@ -265,9 +265,12 @@
 
   /* i en browser ligger adresselinjen oven paa siden; som app klarer safe-area det selv */
   @media (display-mode:browser){
-    body{padding-top:calc(env(safe-area-inset-top,0px) + 38px)}
-    #home .top{padding-top:calc(env(safe-area-inset-top,0px) + 46px)}
+    body{padding-top:calc(env(safe-area-inset-top,0px) + 20px)}
+    #home .top{padding-top:calc(env(safe-area-inset-top,0px) + 26px)}
   }
+  /* iPhone i Safari: bjaelken ligger oven paa siden og env melder nul */
+  :root.safari-top body{padding-top:max(env(safe-area-inset-top,0px),62px)}
+  :root.safari-top #home .top{padding-top:max(calc(env(safe-area-inset-top,0px) + 8px),68px)}
 
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
 </style>
@@ -373,7 +376,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 24</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 25</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -677,7 +680,9 @@ const buzz=m=>{if(navigator.vibrate)navigator.vibrate(m);};
 const RANKS=[[0,"r0"],[40,"r1"],[90,"r2"],[180,"r3"],[300,"r4"],[450,"r5"],[650,"r6"],[900,"r7"]];
 function thresholds(){
   const t=[40,90,180];
-  while(t[t.length-1]<IQ+1200) t.push(Math.round(t[t.length-1]*1.55/10)*10);
+  /* der skal altid vaere mindst fire maal foran dig, ellers staar maaleren tom */
+  while(t.filter(v=>v>IQ).length<4 && t.length<60)
+    t.push(Math.round(t[t.length-1]*1.55/10)*10);
   return t;
 }
 function updateIQ(){
@@ -1095,6 +1100,12 @@ document.getElementById("shufBtn").onclick=doShuffle;
 document.getElementById("hintBtn").onclick=hint;
 document.getElementById("sound").onclick=e=>{soundOn=!soundOn;e.currentTarget.textContent=soundOn?"🔊":"🔈";if(soundOn)beep(600,.08);};
 document.addEventListener("gesturestart",e=>e.preventDefault());
+(function(){
+  const app=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+  const iOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||
+    (navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  if(iOS&&!app) document.documentElement.classList.add("safari-top");
+})();
 addEventListener("visibilitychange",()=>{ if(document.hidden) save(); });
 addEventListener("pagehide",save);
 addEventListener("beforeunload",save);
