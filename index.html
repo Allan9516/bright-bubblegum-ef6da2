@@ -113,7 +113,7 @@
     background:radial-gradient(circle,#fff7d4,#f2bd58);z-index:9999}
   .float{position:absolute;font-size:17px;font-weight:800;color:var(--gold);
     text-shadow:0 2px 4px rgba(0,0,0,.65);pointer-events:none;z-index:9999}
-  #toast{position:fixed;left:50%;top:22%;transform:translateX(-50%);z-index:120;
+  #toast{position:fixed;left:50%;top:22%;transform:translateX(-50%);z-index:250;
     padding:11px 20px;border-radius:14px;font-weight:700;font-size:15px;color:#3c2606;
     background:linear-gradient(180deg,#ffe19a,#e5a531);box-shadow:0 8px 20px rgba(0,0,0,.45);
     opacity:0;pointer-events:none}
@@ -184,10 +184,11 @@
     background:linear-gradient(180deg,#a5703a,#7c4a20);border:2px solid #d8ab6a;
     box-shadow:0 4px 0 #4f2c11;font-size:14px;font-weight:800;color:#ffeccb;overflow:hidden}
   .leafbadge b{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-  .homebtns{flex:0 0 auto;display:flex;gap:6px}
-  .round{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:2px solid #d8ab6a;
+  @media (max-width:430px){.leafbadge{font-size:13px;padding:8px}.leafbadge .lf{display:none}}
+  .homebtns{flex:0 0 auto;display:flex;gap:5px}
+  .round{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:2px solid #d8ab6a;
     background:radial-gradient(circle at 35% 28%,#a5703a,#6b3d18);
-    box-shadow:0 4px 0 #4a2810;color:#ffe3ac;font-size:17px;display:grid;place-items:center}
+    box-shadow:0 4px 0 #4a2810;color:#ffe3ac;font-size:16px;display:grid;place-items:center}
   .round:active,.frame:active{transform:translateY(3px);box-shadow:none}
 
   #home .logo{position:relative;z-index:2;margin-top:clamp(14px,4vh,34px);text-align:center;line-height:.92}
@@ -263,6 +264,157 @@
   .namebox button{padding:11px 15px;border:none;border-radius:11px;font-family:inherit;font-weight:700;
     background:#f2bd58;color:#3c2606}
 
+  /* ================= JULETEMA ================= */
+  :root.jul{--wood:#1c7a43;--wood-dk:#07361b;--gold:#ffd98a}
+
+  /* sne over det hele */
+  #snow{position:fixed;inset:0;z-index:205;pointer-events:none;overflow:hidden;display:none}
+  :root.jul #snow{display:block}
+  #snow i{position:absolute;top:-8vh;color:#fff;font-style:normal;line-height:1;
+    text-shadow:0 0 7px rgba(190,225,255,.9);animation:fald linear infinite}
+  @keyframes fald{
+    0%{transform:translate3d(0,-8vh,0) rotate(0deg);opacity:0}
+    8%{opacity:.95}
+    92%{opacity:.95}
+    100%{transform:translate3d(var(--dx,16px),110vh,0) rotate(400deg);opacity:0}}
+  #snow b{position:absolute;font-style:normal;font-weight:400;pointer-events:none;
+    animation:flyv 1.5s cubic-bezier(.2,.7,.3,1) forwards}
+  @keyframes flyv{
+    0%{transform:translate(-50%,0) scale(.4);opacity:0}
+    18%{opacity:1}
+    100%{transform:translate(calc(-50% + var(--fx,0px)),var(--fy,-150px)) scale(1.25);opacity:0}}
+
+  /* forsiden bliver vinternat */
+  :root.jul #home{background:linear-gradient(180deg,#06112a 0%,#0d2b4e 24%,#17527a 50%,#4b8fb6 72%,#cbe6f6 89%,#fff 100%)}
+  :root.jul #home .shoji{mix-blend-mode:screen;opacity:.6;
+    background:radial-gradient(62% 36% at 50% 2%, rgba(150,205,255,.45), transparent 72%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 2px, transparent 2px 8px)}
+  :root.jul #home .blinds{display:none}
+  :root.jul #home .bamboo{background:
+    radial-gradient(74% 26% at 18% 101%, rgba(255,255,255,.98), transparent 70%),
+    radial-gradient(84% 22% at 84% 101%, rgba(255,255,255,.95), transparent 70%)}
+  :root.jul .leafy{width:42px;height:14px;background:linear-gradient(90deg,#34a055,#136130);
+    box-shadow:0 0 0 1.5px rgba(255,255,255,.4),0 3px 5px rgba(0,0,0,.3)}
+  :root.jul .leafy::after{content:"";position:absolute;right:-7px;top:2px;width:10px;height:10px;
+    border-radius:50%;background:radial-gradient(circle at 34% 30%,#ff8575,#ac0f1c)}
+
+  /* lyskæde */
+  #julLys{display:none}
+  :root.jul #home #julLys{display:block;position:absolute;left:0;right:0;top:54px;height:62px;z-index:1;pointer-events:none}
+  #julLys svg{position:absolute;inset:0;width:100%;height:100%}
+  #julLys i{position:absolute;width:12px;height:18px;border-radius:50% 50% 62% 62%;
+    transform:translateX(-50%);background:currentColor;box-shadow:0 0 11px 3px currentColor;
+    animation:blink 2.6s ease-in-out infinite}
+  #julLys i::before{content:"";position:absolute;left:3px;top:-4px;width:6px;height:5px;
+    border-radius:2px;background:#d9c38d}
+  @keyframes blink{0%,100%{filter:brightness(1)}50%{filter:brightness(.42)}}
+
+  /* hilsenen */
+  .julhilsen{display:none}
+  :root.jul #home .julhilsen{display:block;position:relative;z-index:4;margin-top:30px;
+    padding:11px 24px 12px;border:3px solid #ffd98a;border-radius:16px;font-family:inherit;color:#fff;
+    background:linear-gradient(180deg,#d8162b,#8a0a17);
+    box-shadow:0 6px 0 #570510,0 12px 20px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.28);
+    transform-origin:50% -24px;animation:gynge 4.4s ease-in-out infinite}
+  :root.jul #home .julhilsen::before{content:"";position:absolute;left:50%;top:-24px;width:2px;height:24px;
+    margin-left:-1px;background:#ffd98a}
+  :root.jul #home .julhilsen .sn{position:absolute;left:-4px;right:-4px;top:-8px;height:13px;
+    border-radius:13px 13px 42% 42%;background:#fff;box-shadow:0 2px 0 rgba(196,222,244,.95)}
+  :root.jul #home .julhilsen b{display:block;font-size:clamp(19px,5.6vw,26px);font-weight:900;letter-spacing:.4px;
+    text-shadow:0 2px 0 #6b0712}
+  :root.jul #home .julhilsen em{display:block;margin-top:1px;font-style:normal;font-weight:700;
+    font-size:clamp(12px,3.4vw,15px);color:#ffe3a8}
+  :root.jul #home .julhilsen:active{transform:scale(.97) rotate(0deg)}
+  @keyframes gynge{0%,100%{transform:rotate(-2.1deg)}50%{transform:rotate(2.1deg)}}
+
+  /* logo, medalje og knapper i julefarver */
+  :root.jul #home .logo{margin-top:clamp(10px,2.6vh,22px)}
+  :root.jul .logo .l1{color:#ffe9a8;text-shadow:0 3px 0 #a3121f,0 6px 0 #6d0a14,0 9px 14px rgba(0,0,0,.45)}
+  :root.jul .logo .l2{color:#fff;text-shadow:0 4px 0 #c0142a,0 8px 0 #7d0a18,0 12px 18px rgba(0,0,0,.45)}
+  :root.jul .logo .chip{background:linear-gradient(168deg,#fff,#e7f3ff);border-color:#c0142a;color:#b5121f}
+  :root.jul #home .medal{width:min(54vw,232px)}
+  :root.jul #home .medal svg{filter:hue-rotate(-34deg) saturate(1.75) drop-shadow(0 10px 18px rgba(0,0,0,.45))}
+  :root.jul #home .medal::before{content:"";position:absolute;left:50%;top:-15px;margin-left:-14px;z-index:4;
+    width:26px;height:17px;border-radius:4px 4px 3px 3px;background:linear-gradient(180deg,#ffe8a6,#c99526);border:2px solid #8a6416}
+  :root.jul .leafbadge{background:linear-gradient(180deg,#1f8c4c,#0c5128);border-color:#8fe0ab;box-shadow:0 4px 0 #063318}
+  :root.jul .round{background:radial-gradient(circle at 35% 28%,#d8162b,#7d0a18);border-color:#ffd98a;
+    box-shadow:0 4px 0 #550611;color:#fff}
+  :root.jul .frame{border-color:#ffd98a;box-shadow:0 4px 0 #550611,inset 0 2px 0 rgba(255,255,255,.5)}
+  :root.jul .rankbadge{background:linear-gradient(180deg,#1f8c4c,#0b4423);border-color:#8fe0ab;box-shadow:0 5px 0 #052d14}
+  :root.jul #home .play{border-color:#fff;background:linear-gradient(180deg,#ff5d52,#d8162b 55%,#9c0b18);
+    box-shadow:0 7px 0 #6d0712,0 14px 22px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.5)}
+  :root.jul #home .play:active{box-shadow:0 3px 0 #6d0712}
+
+  /* banen */
+  :root.jul body{background:radial-gradient(135% 75% at 50% -12%, #1d7357 0%, #0c3a2b 44%, #04201a 100%)}
+  :root.jul .tile{background:linear-gradient(150deg,#fff 0%,#cfe4f2 55%,#8fb3c9 100%)}
+  :root.jul .tile::before{content:"";position:absolute;left:3px;right:4px;top:-3px;height:6px;z-index:2;
+    border-radius:6px 6px 52% 52%;background:#fff;box-shadow:0 1px 0 rgba(186,213,234,.95)}
+  :root.jul .tile.locked::before{opacity:.45}
+  :root.jul .tile.gold{background:linear-gradient(150deg,#ffe49a,#c07a1a)}
+
+  :root.jul .lvl{background:radial-gradient(circle at 35% 28%,#d8162b,#7d0a18)}
+  :root.jul .btn{background:radial-gradient(circle at 34% 28%,#229752,#0b4522 78%)}
+
+  /* prik paa gaveknappen */
+  .round{position:relative}
+  .round .nydot{position:absolute;top:-3px;right:-3px;width:13px;height:13px;border-radius:50%;
+    background:#ff3b30;border:2px solid #fff;box-shadow:0 0 8px rgba(255,59,48,.9);animation:bank 1.2s ease-in-out infinite}
+  @keyframes bank{0%,100%{transform:scale(1)}50%{transform:scale(1.32)}}
+
+  /* ---------- julekalender ---------- */
+  #julBox{position:fixed;inset:0;z-index:236;display:none;place-items:center;padding:16px;background:rgba(2,12,22,.78)}
+  #julBox.show{display:grid}
+  #julBox .kcard{width:100%;max-width:430px;max-height:90vh;overflow:auto;-webkit-overflow-scrolling:touch;
+    border-radius:20px;padding:16px 15px 15px;border:3px solid #ffd98a;
+    background:linear-gradient(180deg,#123f6b,#061a33);box-shadow:0 16px 36px rgba(0,0,0,.55)}
+  #julBox h3{text-align:center;font-size:20px;color:#fff;letter-spacing:.4px}
+  #julBox .kund{text-align:center;font-size:12px;color:#bcd8ef;margin:3px 0 12px}
+  #julBox .ktit{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#9fc4e2;margin:14px 0 6px}
+  .doors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .door{position:relative;aspect-ratio:1;border-radius:12px;border:2px solid #c99526;font-family:inherit;
+    background:linear-gradient(180deg,#b4172a,#7a0a16);color:#ffe9c2;font-size:19px;font-weight:900;
+    display:grid;place-items:center;box-shadow:0 3px 0 #4a060f}
+  .door:active{transform:translateY(2px);box-shadow:0 1px 0 #4a060f}
+  .door.klar{background:linear-gradient(180deg,#229752,#0c5128);border-color:#ffe9a8;animation:glim 1.7s ease-in-out infinite}
+  .door.laast{background:linear-gradient(180deg,#3a4857,#1e2732);border-color:#64748a;color:#8fa0b4;
+    box-shadow:0 3px 0 #131a22;gap:1px;line-height:1}
+  .door .dn{font-size:17px}
+  .door .dl{font-size:10px;opacity:.75}
+  .door.aaben{background:linear-gradient(180deg,#f6e7c6,#d9c093);border-color:#a07d43;color:#6b3f1b;
+    font-size:23px;box-shadow:0 3px 0 #8a6a3a}
+  @keyframes glim{0%,100%{box-shadow:0 3px 0 #063318}50%{box-shadow:0 3px 0 #063318,0 0 15px 4px rgba(255,233,168,.6)}}
+  .adv{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .advg{position:relative;border-radius:13px;border:2px solid #ffd98a;padding:9px 4px 8px;font-family:inherit;
+    background:linear-gradient(180deg,#1f8c4c,#0a4522);color:#fff;box-shadow:0 3px 0 #052d14;
+    display:grid;place-items:center;gap:2px}
+  .advg:active{transform:translateY(2px);box-shadow:0 1px 0 #052d14}
+  .advg span{font-size:21px;line-height:1.1}
+  .advg small{font-size:10px;font-weight:800;color:#d7f3e2;letter-spacing:.3px}
+  .advg.klar{animation:glim 1.7s ease-in-out infinite}
+  .advg.laast{background:linear-gradient(180deg,#3a4857,#1e2732);border-color:#64748a;box-shadow:0 3px 0 #131a22;opacity:.78}
+  .advg.aaben{background:linear-gradient(180deg,#f6e7c6,#d9c093);border-color:#a07d43;box-shadow:0 3px 0 #8a6a3a}
+  .advg.aaben small{color:#6b3f1b}
+  #julBox .krow{display:flex;gap:9px;margin-top:14px}
+  #julBox .krow button{flex:1;padding:13px;border:none;border-radius:13px;font-family:inherit;font-weight:800;font-size:15px}
+  #julTema{background:linear-gradient(180deg,#1f8c4c,#0c5128);color:#eaffee;border:2px solid #8fe0ab!important}
+  #julLuk{background:rgba(255,255,255,.14);color:#dbe9f6}
+
+  /* gavekortet */
+  #julGave{position:fixed;inset:0;z-index:244;display:none;place-items:center;padding:24px;background:rgba(2,12,22,.86)}
+  #julGave.show{display:grid}
+  #julGave .gcard{width:100%;max-width:340px;text-align:center;border-radius:22px;padding:24px 20px 20px;
+    border:3px solid #ffd98a;background:linear-gradient(180deg,#d8162b,#7d0a18);
+    box-shadow:0 16px 40px rgba(0,0,0,.6);animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
+  @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+  #julGave .gday{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#ffd0a8}
+  #julGave .gicon{font-size:54px;line-height:1.1;margin:6px 0 4px}
+  #julGave .gtxt{font-size:17px;font-weight:700;color:#fff;line-height:1.4}
+  #julGave .gpr{display:inline-block;margin-top:12px;padding:8px 15px;border-radius:999px;
+    background:linear-gradient(180deg,#ffe49a,#e0a62a);color:#5c3a05;font-weight:900;font-size:15px}
+  #julGave button{margin-top:16px;width:100%;padding:14px;border:none;border-radius:14px;font-family:inherit;
+    font-weight:900;font-size:16px;background:#fff6e2;color:#8a0a17}
+
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -294,18 +446,20 @@
 
 <div id="home">
   <div class="shoji"></div><div class="blinds"></div><div class="bamboo"></div>
+  <div id="julLys" aria-hidden="true"></div>
   <div class="leafy" style="left:9%;top:46%;transform:rotate(28deg)"></div>
   <div class="leafy" style="right:8%;top:34%;transform:rotate(-34deg)"></div>
   <div class="leafy" style="left:22%;bottom:26%;transform:rotate(-14deg);width:40px"></div>
 
   <div class="top">
     <button class="frame" id="avatarBtn"><span id="avatarLetter">?</span></button>
-    <div class="leafbadge">🍃 <b id="homeRank">Nysgerrig</b></div>
+    <div class="leafbadge"><span class="lf">🍃</span> <b id="homeRank">Nysgerrig</b></div>
     <div class="homebtns">
       <button class="round" id="duelBtn" aria-label="Dyst">⚔️</button>
       <button class="round" id="langBtn" aria-label="Sprog">🌐</button>
       <button class="round" id="lbBtn" aria-label="Topliste">🏆</button>
       <button class="round" id="setBtn" aria-label="Lyd">🔊</button>
+      <button class="round" id="kalBtn" aria-label="Julekalender">🎁</button>
     </div>
   </div>
 
@@ -313,6 +467,10 @@
     <span class="l1">IQ</span>
     <span class="l2">MAHJONG<span class="chip">發</span></span>
   </div>
+
+  <button class="julhilsen" id="julSign" aria-label="God Jul Min Koni">
+    <span class="sn"></span><b>God Jul</b><em>Min Koni</em>
+  </button>
 
   <div class="medal">
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -367,7 +525,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 26</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 27</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -1065,6 +1223,10 @@ function startLevel(n){
     G.startIQ=r.startIQ!==undefined?r.startIQ:IQ;
   }
   RESTORE=null;
+  if(!duel&&window.JULBONUS&&window.JULBONUS.brug){
+    const jb=window.JULBONUS.brug();
+    G.hints+=jb.hint;G.undos+=jb.undo;G.shuffles+=jb.shuf;
+  }
   render();save();
 }
 
@@ -1108,6 +1270,7 @@ async function resumeSaved(){
 resumeSaved();
 
 window.GAME={start:startLevel,setIQ:v=>{IQ=v;},pts:()=>PTS,best:()=>BEST,save:save,
+  addPts:n=>{ if(window.DUEL&&window.DUEL.on) return false; PTS+=(+n||0); if(PTS>BEST)BEST=PTS; save(); return true; },
   restore:d=>{ IQ=+d.iq||0; PTS=+d.pts||0; BEST=Math.max(+d.best||0,PTS);
     SEED=newSeed(); RESTORE=null; startLevel(Math.max(1,+d.level||1)); save(); },
   enterDuel:code=>{ save(); window.DUEL={on:true,code}; IQ=0;PTS=0;RESTORE=null; startLevel(1); },
@@ -1598,6 +1761,248 @@ if("serviceWorker" in navigator && location.protocol.startsWith("http")){
     });
   });
 }
+</script>
+
+<div id="snow" aria-hidden="true"></div>
+
+<div id="julBox"><div class="kcard">
+  <h3>🎄 Julekalender</h3>
+  <div class="kund" id="julUnder"></div>
+  <div class="ktit">24 låger</div>
+  <div class="doors" id="doors"></div>
+  <div class="ktit">Adventsgaver</div>
+  <div class="adv" id="advents"></div>
+  <div class="krow">
+    <button id="julTema">Juletema</button>
+    <button id="julLuk">Luk</button>
+  </div>
+</div></div>
+
+<div id="julGave"><div class="gcard">
+  <div class="gday" id="gDay"></div>
+  <div class="gicon" id="gIcon"></div>
+  <div class="gtxt" id="gTxt"></div>
+  <div class="gpr" id="gPr"></div>
+  <button id="gLuk">Tak!</button>
+</div></div>
+
+<script>
+/* ================= JUL: tema, sne, lyskaede og kalender ================= */
+(function(){
+  const D=document, root=D.documentElement;
+  const get=(k,f)=>{try{const v=localStorage.getItem("iq:"+k);return v?JSON.parse(v):f;}catch(e){return f;}};
+  const set=(k,v)=>{try{localStorage.setItem("iq:"+k,JSON.stringify(v));}catch(e){}};
+
+  /* ---- hvilken julesaeson er vi i ---- */
+  const nu=()=>new Date();
+  const saeson=()=>{const d=nu();return d.getMonth()>=10?d.getFullYear():d.getFullYear()-1;};
+  const AAR=saeson();
+  /* fjerde advent er sidste soendag til og med 24. december */
+  function adventDato(n){
+    const d=new Date(AAR,11,24);
+    d.setDate(24-d.getDay()-7*(4-n));
+    return d;
+  }
+  const laage=n=>new Date(AAR,11,n);
+  const aaben=d=>nu()>=d;
+  const datoTekst=d=>d.getDate()+". "+["januar","februar","marts","april","maj","juni","juli","august","september","oktober","november","december"][d.getMonth()];
+
+  /* ---- gaverne ---- */
+  const P="pts", H="hint", U="undo", S="shuf";
+  const G24=[
+    ["🎄","Så er julen skudt i gang. Godt at have dig med.",P,500],
+    ["☕","Dagens opgave: lav kakao til Koni.",H,1],
+    ["🧦","Taberen af næste bane rydder op efter aftensmaden.",P,600],
+    ["↩️","Et ekstra fortryd — til dig der klikker for hurtigt.",U,2],
+    ["💋","Et kys på kinden, så står den her låge rigtig fint.",P,700],
+    ["💬","Dagens opgave: sig tre ting du holder af ved hende.",S,1],
+    ["⭐","Gratis point. Brug dem med god samvittighed.",P,900],
+    ["🎬","Dagens opgave: sæt den julefilm på, hun altid vælger.",H,1],
+    ["💎","Dobbelt op i dag.",P,1200],
+    ["🥞","Halvvejs. Lav æbleskiver.",H,2],
+    ["🚶","Dagens opgave: en aftentur forbi julelysene.",P,1000],
+    ["🔀","To ekstra blandinger, når brættet driller.",S,2],
+    ["🕯️","Luciadag. Tænd et lys for hende.",P,1300],
+    ["💌","Skriv en seddel og gem den i hendes jakkelomme.",H,1],
+    ["🏆","Point til dig, der ikke gav op.",P,1500],
+    ["💃","Dagens opgave: dans en enkelt gang i køkkenet.",U,2],
+    ["🔔","Snart jul.",P,1700],
+    ["🍬","Dagens opgave: køb hendes yndlingsslik.",H,2],
+    ["✨","Point, bare fordi.",P,1900],
+    ["🧹","Dagens opgave: ryd op uden at blive bedt om det.",S,3],
+    ["🌙","Årets korteste dag. Til gengæld lange point.",P,2100],
+    ["🎀","Pak én gave ekstra pænt ind i dag.",U,3],
+    ["🌟","Lillejuleaften. Sidste træning.",P,2300],
+    ["❤️","Juleaften. God Jul Min Koni.",P,5000]
+  ];
+  const GADV=[
+    ["🕯️","Første søndag i advent. Tænd det første lys.",P,1500],
+    ["🕯️","Andet lys. Nu er I godt i gang.",P,2000],
+    ["🕯️","Tredje lys. Det begynder at dufte af jul.",P,2500],
+    ["🕯️","Fjerde lys. God Jul Min Koni.",P,3000]
+  ];
+  const NAVN={pts:"point",hint:"tip",undo:"fortryd",shuf:"blandinger"};
+  const praemie=(t,n)=>t===P?("+"+n.toLocaleString("da-DK")+" point"):("+"+n+" "+NAVN[t]+" i næste bane");
+
+  /* ---- gemte ting ---- */
+  let aabnet=get("jul"+AAR,{d:[],a:[]});
+  if(!aabnet.d)aabnet={d:[],a:[]};
+  window.JULBONUS=get("julbonus",{hint:0,undo:0,shuf:0});
+  const gemBonus=()=>set("julbonus",window.JULBONUS);
+  window.JULBONUS.brug=function(){
+    const b={hint:this.hint|0,undo:this.undo|0,shuf:this.shuf|0};
+    this.hint=0;this.undo=0;this.shuf=0;gemBonus();
+    return b;
+  };
+
+  /* ---- sne ---- */
+  const sne=D.getElementById("snow");
+  function byg(){
+    if(sne.querySelector("i"))return;
+    const tegn=["❄︎","❅","❆","•"];
+    let h="";
+    for(let i=0;i<30;i++){
+      const s=6+Math.random()*14, t=7+Math.random()*9, d=-Math.random()*16;
+      h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;font-size:'+s.toFixed(0)+'px;'+
+         'animation-duration:'+t.toFixed(1)+'s;animation-delay:'+d.toFixed(1)+'s;'+
+         '--dx:'+((Math.random()*90-45)|0)+'px;opacity:'+(.45+Math.random()*.5).toFixed(2)+'">'+
+         tegn[(Math.random()*tegn.length)|0]+'</i>';
+    }
+    sne.insertAdjacentHTML("afterbegin",h);
+  }
+  function pust(tegn,n){
+    const w=innerWidth/2, y=innerHeight*0.45;
+    for(let i=0;i<n;i++){
+      const b=D.createElement("b");
+      b.textContent=tegn[(Math.random()*tegn.length)|0];
+      b.style.cssText="left:"+w+"px;top:"+y+"px;font-size:"+(18+Math.random()*20)+"px;"+
+        "--fx:"+((Math.random()*300-150)|0)+"px;--fy:"+(-120-Math.random()*220|0)+"px;"+
+        "animation-delay:"+(Math.random()*.3).toFixed(2)+"s";
+      sne.appendChild(b);
+      setTimeout(()=>b.remove(),2200);
+    }
+  }
+
+  /* ---- lyskaede ---- */
+  function lys(){
+    const box=D.getElementById("julLys");
+    if(box.childNodes.length)return;
+    const N=13, H=62, y0=8, yc=52;
+    let h='<svg viewBox="0 0 100 '+H+'" preserveAspectRatio="none"><path d="M0 '+y0+' Q50 '+yc+' 100 '+y0+
+          '" fill="none" stroke="#14202e" stroke-width="2" vector-effect="non-scaling-stroke" opacity=".8"/></svg>';
+    const far=["#ff3b30","#ffd21e","#34c759","#4aa8ff","#ff7ad9"];
+    for(let i=0;i<N;i++){
+      const t=i/(N-1), x=t*100, y=(1-t)*(1-t)*y0+2*(1-t)*t*yc+t*t*y0;
+      h+='<i style="left:'+x.toFixed(2)+'%;top:'+y.toFixed(1)+'px;color:'+far[i%far.length]+
+         ';animation-delay:'+(i*0.17).toFixed(2)+'s"></i>';
+    }
+    box.innerHTML=h;
+  }
+
+  /* ---- lyd ---- */
+  function klokker(){
+    if(typeof beep!=="function")return;
+    [1047,1319,1568,2093,1568].forEach((f,i)=>setTimeout(()=>beep(f,.45,"sine",.06),i*115));
+  }
+
+  /* ---- temaet til og fra ---- */
+  const auto=()=>{const m=nu().getMonth();return m===10||m===11||m===0;};
+  let temaPaa=get("jultema",null);
+  if(temaPaa===null)temaPaa=auto();
+  function saetTema(p,lyd){
+    temaPaa=p;set("jultema",p);
+    root.classList.toggle("jul",p);
+    if(p){byg();lys();if(lyd){klokker();pust(["❄","🎄","⭐"],14);}}
+    const b=D.getElementById("julTema");
+    if(b)b.textContent=p?"Juletema: til":"Juletema: fra";
+  }
+  saetTema(temaPaa,false);
+
+  /* ---- hilsenen ---- */
+  const hils=D.getElementById("julSign");
+  if(hils)hils.onclick=()=>{klokker();pust(["❤️","❄","⭐","🎄"],16);};
+
+  /* ---- kalenderen ---- */
+  const boks=D.getElementById("julBox"), gave=D.getElementById("julGave");
+  function nyeGaver(){
+    let n=0;
+    for(let i=1;i<=24;i++) if(aaben(laage(i))&&aabnet.d.indexOf(i)<0)n++;
+    for(let i=1;i<=4;i++) if(aaben(adventDato(i))&&aabnet.a.indexOf(i)<0)n++;
+    return n;
+  }
+  function prik(){
+    const b=D.getElementById("kalBtn");if(!b)return;
+    const har=nyeGaver()>0, d=b.querySelector(".nydot");
+    if(har&&!d)b.insertAdjacentHTML("beforeend",'<span class="nydot"></span>');
+    if(!har&&d)d.remove();
+  }
+  function tegn(){
+    let h="";
+    for(let i=1;i<=24;i++){
+      const d=laage(i), kan=aaben(d), er=aabnet.d.indexOf(i)>=0;
+      h+='<button class="door '+(er?"aaben":kan?"klar":"laast")+'" data-t="d" data-n="'+i+'">'+
+         (er?G24[i-1][0]:kan?String(i):'<span class="dn">'+i+'</span><span class="dl">🔒</span>')+'</button>';
+    }
+    D.getElementById("doors").innerHTML=h;
+    let a="";
+    for(let i=1;i<=4;i++){
+      const d=adventDato(i), kan=aaben(d), er=aabnet.a.indexOf(i)>=0;
+      a+='<button class="advg '+(er?"aaben":kan?"klar":"laast")+'" data-t="a" data-n="'+i+'">'+
+         '<span>'+(er?"🕯️":kan?"🎁":"🔒")+'</span><small>'+i+'. advent</small></button>';
+    }
+    D.getElementById("advents").innerHTML=a;
+    const n=nyeGaver();
+    let txt;
+    if(n>0){ txt=n===1?"Der er 1 gave at pakke op":"Der er "+n+" gaver at pakke op"; }
+    else{
+      let naeste=null;
+      for(let i=1;i<=24;i++) if(aabnet.d.indexOf(i)<0){const d=laage(i);if(!naeste||d<naeste)naeste=d;}
+      for(let i=1;i<=4;i++) if(aabnet.a.indexOf(i)<0){const d=adventDato(i);if(!naeste||d<naeste)naeste=d;}
+      txt=naeste?("N\u00e6ste gave \u00e5bner "+datoTekst(naeste)):"Alt er pakket op \u2014 god jul!";
+    }
+    D.getElementById("julUnder").textContent=txt;
+    prik();
+  }
+  function vis(t,n,nyss){
+    const g=t==="d"?G24[n-1]:GADV[n-1];
+    const d=t==="d"?laage(n):adventDato(n);
+    D.getElementById("gDay").textContent=t==="d"?(n+". december"):(n+". søndag i advent · "+datoTekst(d));
+    D.getElementById("gIcon").textContent=g[0];
+    D.getElementById("gTxt").textContent=g[1];
+    const pr=D.getElementById("gPr");
+    pr.textContent=praemie(g[2],g[3]);
+    pr.style.display=nyss?"inline-block":"none";
+    gave.classList.add("show");
+    if(nyss){klokker();pust(["🎁","⭐","❄","❤️"],18);}
+  }
+  function pakUd(t,n){
+    const g=t==="d"?G24[n-1]:GADV[n-1];
+    if(window.DUEL&&window.DUEL.on){ if(window.toast)toast("Luk dysten først, så gemmer gaven sig ikke væk"); return; }
+    if(g[2]===P){ if(window.GAME&&window.GAME.addPts)window.GAME.addPts(g[3]); }
+    else { window.JULBONUS[g[2]]=(window.JULBONUS[g[2]]|0)+g[3]; gemBonus(); }
+    (t==="d"?aabnet.d:aabnet.a).push(n);
+    set("jul"+AAR,aabnet);
+    if(window.paintHome)paintHome();
+    try{ if(window.LB&&window.LB.push)window.LB.push(true); }catch(e){}
+    tegn();vis(t,n,true);
+  }
+  D.getElementById("kalBtn").onclick=()=>{tegn();boks.classList.add("show");};
+  D.getElementById("julLuk").onclick=()=>boks.classList.remove("show");
+  D.getElementById("julTema").onclick=()=>saetTema(!temaPaa,true);
+  D.getElementById("gLuk").onclick=()=>gave.classList.remove("show");
+  boks.addEventListener("click",e=>{
+    const b=e.target.closest("[data-t]");if(!b)return;
+    const t=b.dataset.t, n=+b.dataset.n;
+    const d=t==="d"?laage(n):adventDato(n);
+    const er=(t==="d"?aabnet.d:aabnet.a).indexOf(n)>=0;
+    if(er){vis(t,n,false);return;}
+    if(!aaben(d)){ if(window.toast)toast("Åbner "+datoTekst(d)); return; }
+    pakUd(t,n);
+  });
+  prik();
+  setInterval(prik,60000);
+  D.addEventListener("visibilitychange",()=>{if(!D.hidden)prik();});
+})();
 </script>
 </body>
 </html>
