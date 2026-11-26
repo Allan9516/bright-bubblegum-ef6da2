@@ -246,8 +246,8 @@
 
   /* i en browser ligger adresselinjen oven paa siden; som app klarer safe-area det selv */
   @media (display-mode:browser){
-    body{padding-top:max(env(safe-area-inset-top,0px),52px)}
-    #home .top{padding-top:max(calc(env(safe-area-inset-top,0px) + 10px),58px)}
+    body{padding-top:calc(env(safe-area-inset-top,0px) + 38px)}
+    #home .top{padding-top:calc(env(safe-area-inset-top,0px) + 46px)}
   }
 
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
@@ -359,7 +359,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 18</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 20</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -850,9 +850,10 @@ function fit(){
   /* maal det der rent faktisk er synligt - iOS lyver om hoejden naar vaerktoejslinjen er fremme */
   const vv=window.visualViewport;
   const screenH=vv?vv.height:window.innerHeight;
-  const hud=document.getElementById("hud").getBoundingClientRect().height;
+  const box=viewport.getBoundingClientRect();
   const ctr=document.getElementById("controls").getBoundingClientRect().height;
-  const h=Math.max(120,screenH-hud-ctr-14);
+  /* den mindste af: pladsen i rammen, og det der er tilbage af den synlige skaerm */
+  const h=Math.max(120,Math.min(box.height,screenH-box.top-ctr)-12);
   const w=Math.max(120,viewport.clientWidth-10);
   const s=Math.min(1.6,w/G.stageW,h/G.stageH);
   scaler.style.transform=`scale(${Math.max(.25,s)})`;
