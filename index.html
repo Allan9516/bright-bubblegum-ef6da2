@@ -171,34 +171,35 @@
     font-size:24px;font-weight:800;color:#1d4f7a}
   .leafbadge{flex:1 1 auto;min-width:0;justify-content:center;display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:14px;
     background:linear-gradient(180deg,#a5703a,#7c4a20);border:2px solid #d8ab6a;
-    box-shadow:0 4px 0 #4f2c11;font-size:15px;font-weight:800;color:#ffeccb;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+    box-shadow:0 4px 0 #4f2c11;font-size:14px;font-weight:800;color:#ffeccb;overflow:hidden}
+  .leafbadge b{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .homebtns{flex:0 0 auto;display:flex;gap:6px}
   .round{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:2px solid #d8ab6a;
     background:radial-gradient(circle at 35% 28%,#a5703a,#6b3d18);
     box-shadow:0 4px 0 #4a2810;color:#ffe3ac;font-size:17px;display:grid;place-items:center}
   .round:active,.frame:active{transform:translateY(3px);box-shadow:none}
 
-  #home .logo{position:relative;z-index:2;margin-top:20px;text-align:center;line-height:.92}
-  .logo .l1{display:block;font-size:44px;font-style:italic;font-weight:800;color:#fffaf0;
+  #home .logo{position:relative;z-index:2;margin-top:clamp(14px,4vh,34px);text-align:center;line-height:.92}
+  .logo .l1{display:block;font-size:clamp(36px,11vw,56px);font-style:italic;font-weight:800;color:#fffaf0;
     letter-spacing:-1px;
     text-shadow:0 3px 0 #8a5327,0 6px 0 #6d3f1b,0 9px 14px rgba(0,0,0,.35)}
-  .logo .l2{display:block;font-size:52px;font-weight:900;color:#fff7e4;letter-spacing:1px;
+  .logo .l2{display:block;font-size:clamp(44px,13vw,66px);font-weight:900;color:#fff7e4;letter-spacing:1px;
     text-shadow:0 4px 0 #8a5327,0 8px 0 #6d3f1b,0 12px 16px rgba(0,0,0,.35)}
   .logo .chip{display:inline-block;vertical-align:-6px;margin-left:6px;width:34px;height:44px;
     border-radius:7px;background:linear-gradient(168deg,#fffdf6,#f0e2c0);border:2px solid #c8a15a;
     color:#127a4e;font-size:22px;font-weight:800;line-height:40px;text-shadow:none;
     font-family:"Songti SC","Noto Serif CJK SC",serif}
 
-  #home .medal{position:relative;z-index:2;margin:auto 0;width:min(62vw,250px);aspect-ratio:1}
+  #home .medal{position:relative;z-index:2;margin:auto 0;width:min(70vw,310px);aspect-ratio:1}
   #home .medal svg{width:100%;height:100%;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))}
-  .rankbadge{position:absolute;right:12px;bottom:12%;z-index:3;text-align:center;min-width:104px;
+  .rankbadge{position:absolute;right:-6px;bottom:-14px;z-index:3;text-align:center;min-width:104px;
     padding:10px 14px;border-radius:14px;background:linear-gradient(180deg,#8a5327,#5c3315);
     border:2px solid #d8ab6a;box-shadow:0 5px 0 #3f2210;color:#ffe9c2;font-size:12px}
   .rankbadge b{display:block;font-size:22px;color:#ffd77e;font-variant-numeric:tabular-nums}
   .rankbadge #ptsWord{font-size:9px;letter-spacing:.8px;color:#e9c78e}
 
-  #home .play{position:relative;z-index:2;margin:0 0 max(26px,env(safe-area-inset-bottom));
-    width:min(76vw,320px);padding:18px 20px;border:3px solid #ffdb9c;border-radius:999px;
+  #home .play{position:relative;z-index:2;margin:0 0 max(34px,calc(env(safe-area-inset-bottom,0px) + 26px));
+    width:min(80vw,340px);padding:20px;border:3px solid #ffdb9c;border-radius:999px;
     background:linear-gradient(180deg,#ffb14a,#f08a1c 55%,#d76d10);
     box-shadow:0 7px 0 #9c4f0b,0 14px 22px rgba(0,0,0,.4),inset 0 2px 0 rgba(255,255,255,.5);
     color:#fff;font-size:26px;font-weight:900;font-family:inherit;
@@ -243,6 +244,12 @@
   .namebox button{padding:11px 15px;border:none;border-radius:11px;font-family:inherit;font-weight:700;
     background:#f2bd58;color:#3c2606}
 
+  /* i en browser ligger adresselinjen oven paa siden; som app klarer safe-area det selv */
+  @media (display-mode:browser){
+    body{padding-top:max(env(safe-area-inset-top,0px),52px)}
+    #home .top{padding-top:max(calc(env(safe-area-inset-top,0px) + 10px),58px)}
+  }
+
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -274,8 +281,8 @@
 
 <div id="home">
   <div class="shoji"></div><div class="blinds"></div><div class="bamboo"></div>
-  <div class="leafy" style="left:14%;top:26%;transform:rotate(28deg)"></div>
-  <div class="leafy" style="right:12%;top:38%;transform:rotate(-34deg)"></div>
+  <div class="leafy" style="left:9%;top:46%;transform:rotate(28deg)"></div>
+  <div class="leafy" style="right:8%;top:34%;transform:rotate(-34deg)"></div>
   <div class="leafy" style="left:22%;bottom:26%;transform:rotate(-14deg);width:40px"></div>
 
   <div class="top">
@@ -352,7 +359,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 15</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 18</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -1218,7 +1225,7 @@ function paintHome(){
   document.getElementById("homeIQ").textContent=window.GAME.iq();
   document.getElementById("homeRank").textContent=
     (window.DUEL&&window.DUEL.on)?window.T("duelOn",{c:window.DUEL.code}):
-    (cloud&&cloud.proj?window.T("cloudOn",{r:cloud.room}):(window.GAME.rank()||window.T("r0")));
+    (cloud&&cloud.proj?cloud.room:(window.GAME.rank()||window.T("r0")));
   document.getElementById("avatarLetter").textContent=(me.name||"?").trim().charAt(0).toUpperCase();
   const pos=cache.findIndex(e=>e.id===me.id);
   document.getElementById("homePos").textContent=pos<0?"#–":"#"+(pos+1);
