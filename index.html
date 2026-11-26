@@ -359,7 +359,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 20</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 21</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -1293,7 +1293,8 @@ function paintLangs(){
 document.getElementById("langBtn").onclick=()=>{ paintLangs(); langBox.classList.add("on"); };
 /* ---------- sikkerhedskode: hele dit spil i én streng ---------- */
 function backupCode(){
-  const raw=[(cloud&&cloud.proj)||"",(cloud&&cloud.key)||"",(cloud&&cloud.room)||"",me.id,me.name].join("|");
+  const raw=[(cloud&&cloud.proj)||"",(cloud&&cloud.key)||"",(cloud&&cloud.room)||"",me.id,me.name,
+    window.GAME.best(),window.GAME.level(),window.GAME.iq()].join("|");
   return "IQMJB."+btoa(unescape(encodeURIComponent(raw))).replace(/=+$/,"");
 }
 function readBackup(txt){
@@ -1302,7 +1303,8 @@ function readBackup(txt){
   try{
     const p=decodeURIComponent(escape(atob(m[1]))).split("|");
     if(p.length<5) return null;
-    return {proj:p[0],key:p[1],room:p[2],id:p[3],name:p[4]};
+    return {proj:p[0],key:p[1],room:p[2],id:p[3],name:p[4],
+      pts:+p[5]||0,level:+p[6]||0,iq:+p[7]||0};
   }catch(e){ return null; }
 }
 async function doRestore(txt){
@@ -1316,11 +1318,16 @@ async function doRestore(txt){
   }
   let mine=null;
   try{ mine=(await cloudList()).find(e=>e.id===me.id); }catch(e){}
-  if(!mine){ alert(window.T("restoreNone")); paintHome(); return; }
-  window.GAME.restore({iq:mine.iq,pts:mine.pts,best:mine.pts,level:mine.level});
+  /* koden baerer selv tallene; det hoejeste af kode og liste vinder */
+  const best={pts:Math.max(b.pts||0,(mine&&mine.pts)||0),
+              level:Math.max(b.level||0,(mine&&mine.level)||0)||1,
+              iq:Math.max(b.iq||0,(mine&&mine.iq)||0)};
+  if(!best.pts && !mine){ alert(window.T("restoreNone")); paintHome(); return; }
+  window.GAME.restore({iq:best.iq,pts:best.pts,best:best.pts,level:best.level});
+  try{ await submit(); }catch(e){}
   cache=await cloudList();
   paintRows(); paintHome();
-  alert(window.T("restoreOk",{n:me.name,p:(mine.pts||0).toLocaleString(window.LANG||"da"),l:mine.level}));
+  alert(window.T("restoreOk",{n:me.name,p:best.pts.toLocaleString(window.LANG||"da"),l:best.level}));
 }
 
 /* ---------- invitationslink: én adresse, og man er med ---------- */
