@@ -23,6 +23,7 @@ par, er banen tabt.
 - Ti sprog, valgt efter telefonens indstilling
 - Gemmer bane, point og stilling midt i en bane
 - Virker uden internet, når den først er åbnet
+- Sikkerhedskode, der henter spil og rum tilbage på en ny telefon
 
 ## Filer
 
