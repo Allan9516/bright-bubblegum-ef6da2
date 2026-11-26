@@ -63,7 +63,7 @@
   #sound{flex:0 0 auto;background:none;border:none;color:#8fb3a2;font-size:17px;padding:2px 0 2px 4px;align-self:center}
 
   /* ---------- bræt ---------- */
-  #viewport{flex:1;position:relative;display:flex;justify-content:center;align-items:center;min-height:0;z-index:4}
+  #viewport{flex:1;position:relative;display:flex;justify-content:center;align-items:center;min-height:0;z-index:4;overflow:hidden}
   #scaler{transform-origin:center center}
   #stage{position:relative}
 
@@ -352,7 +352,7 @@
     <div id="cStatus" style="padding:0 12px 10px;font-size:13px;color:#ffe9c2"></div>
     <div class="namebox"><button id="inviteBtn" style="flex:1;background:linear-gradient(180deg,#f2bd58,#cf9226)" data-i18n="invite">Inviter andre</button></div>
   </div>
-  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 13</div>
+  <div style="text-align:center;font-size:11px;color:#e0c89a;padding:6px 0 2px;letter-spacing:1px">version 14</div>
   <div class="bnote" data-i18n="shareNote">Toplisten deles med alle der spiller.</div>
   <button class="close" id="resetAll" style="background:rgba(255,255,255,.1);color:#ffd2c2;box-shadow:none" data-i18n="newGame">Start forfra</button>
   <button class="close" id="closeBoard" style="margin-top:0" data-i18n="close">Luk</button>
@@ -840,10 +840,21 @@ function layout(){
 }
 
 function fit(){
-  const w=viewport.clientWidth-4,h=viewport.clientHeight-4;
-  scaler.style.transform=`scale(${Math.min(2.1,w/G.stageW,h/G.stageH)})`;
+  /* maal det der rent faktisk er synligt - iOS lyver om hoejden naar vaerktoejslinjen er fremme */
+  const vv=window.visualViewport;
+  const screenH=vv?vv.height:window.innerHeight;
+  const hud=document.getElementById("hud").getBoundingClientRect().height;
+  const ctr=document.getElementById("controls").getBoundingClientRect().height;
+  const h=Math.max(120,screenH-hud-ctr-14);
+  const w=Math.max(120,viewport.clientWidth-10);
+  const s=Math.min(1.6,w/G.stageW,h/G.stageH);
+  scaler.style.transform=`scale(${Math.max(.25,s)})`;
 }
 addEventListener("resize",()=>{if(G)fit();});
+if(window.visualViewport){
+  visualViewport.addEventListener("resize",()=>{if(G)fit();});
+  visualViewport.addEventListener("scroll",()=>{if(G)fit();});
+}
 addEventListener("orientationchange",()=>setTimeout(()=>{if(G)fit();},250));
 
 function sparks(x,y,n){
